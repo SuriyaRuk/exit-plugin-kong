@@ -126,7 +126,12 @@ Now you can access konga on [localhost](http://localhost:1337)
 
 #### installation
 * Option 1
- ```luarocks install --server=https://luarocks.org/manifests/suriya exit```
+```
+luarocks install --server=https://luarocks.org/manifests/suriya exit
+
+environments:
+  - KONG_PLUGINS=bundled,exit
+```
 * Option 2 Install manual docker-compose.yml
 ```
 environments:
