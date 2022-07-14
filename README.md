@@ -135,5 +135,5 @@ volumes:
    - ./plugins/exit:/etc/kong/plugins/exit
 ```
 ### add status_service
-config.custom_fields_by_lua.status_service="return kong.service.response.get_status()"
+```config.custom_fields_by_lua.status_service="return kong.service.response.get_status()"```
 
