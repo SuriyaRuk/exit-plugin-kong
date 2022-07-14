@@ -124,7 +124,7 @@ Now you can access konga on [localhost](http://localhost:1337)
 |`config.status_502_to_504`   |boolean |true           |chang 502 status code from resty capture to 504 response status of kong   |
 
 
-#### intstalation
+#### instalation
 * Option 1 luarocks install --server=https://luarocks.org/manifests/suriya exit
 * Option 2 Install manual docker-compose.yml
 ```
@@ -134,4 +134,6 @@ environments:
 volumes:
    - ./plugins/exit:/etc/kong/plugins/exit
 ```
+### add status_service
+config.custom_fields_by_lua.status_service="return kong.service.response.get_status()"
 
