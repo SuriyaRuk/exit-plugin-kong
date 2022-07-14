@@ -138,7 +138,7 @@ environments:
   - KONG_PLUGINS=bundled,exit
   - KONG_LUA_PACKAGE_PATH=/etc/kong/plugins/exit/?.lua;;
 volumes:
-   - ./plugins/exit:/etc/kong/plugins/exit
+  - ./plugins/exit:/etc/kong/plugins/exit
 ```
 ### add status_service
 ```config.custom_fields_by_lua.status_service="return kong.service.response.get_status()"```
