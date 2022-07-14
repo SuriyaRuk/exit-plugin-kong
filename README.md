@@ -119,7 +119,7 @@ Now you can access konga on [localhost](http://localhost:1337)
 ### Exit Plugin Kong
 
 |name                         |Type    |default value  |Desccriptioin                                                             |
-|---------------------------------------------------------------------------------------------------------------------------------|
+|-----------------------------|--------|---------------|--------------------------------------------------------------------------|
 |`config.hide_brand`          |boolean |true           | Hide Kong Error chang to Error                                           |
 |`config.status_502_to_504`   |boolean |true           |chang 502 status code from resty capture to 504 response status of kong   |
 
