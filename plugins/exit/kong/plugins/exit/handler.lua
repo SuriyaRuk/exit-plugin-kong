@@ -61,6 +61,19 @@ function ExitHandler:header_filter(config)
     </html>
     ]]
 
+    local HTML_TEMPLATE_401 = [[
+    <!doctype html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Unauthorized</title>
+        </head>
+    <body>
+        <h1>%s.</h1>
+    <p></p>
+    </body>
+    </html>
+    ]]
 
     local XML_TEMPLATE = [[
     <?xml version="1.0" encoding="UTF-8"?>
@@ -74,23 +87,22 @@ function ExitHandler:header_filter(config)
 
 
     local BODIES = {
-    s400 = "Bad request",
-    s401 = "Unauthorized",
-    s404 = "Not found",
-    s408 = "Request timeout",
-    s411 = "Length required",
-    s412 = "Precondition failed",
-    s413 = "Payload too large",
-    s414 = "URI too long",
-    s417 = "Expectation failed",
-    s494 = "Request header or cookie too large",
-    s500 = "An unexpected error occurred",
-    s502 = "An invalid response was received from the upstream server",
-    s503 = "The upstream server is currently unavailable",
-    s504 = "The upstream server is timing out",
+    s400 = "Bad request (400)",
+    s401 = "Unauthorized (401)",
+    s404 = "Not found (404)",
+    s408 = "Request timeout (408)",
+    s411 = "Length required (411)",
+    s412 = "Precondition failed (412)",
+    s413 = "Payload too large (413)",
+    s414 = "URI too long (414)",
+    s417 = "Expectation failed (417)",
+    s494 = "Request header or cookie too large (494)",
+    s500 = "An unexpected error occurred (500)",
+    s502 = "An invalid response was received from the upstream server (502)",
+    s503 = "The upstream server is currently unavailable (503)",
+    s504 = "The upstream server is timing out (504)",
     default = "The upstream server responded with %d"
     }
-
 
     local accept_header = kong.request.get_header(ACCEPT)
     if type(accept_header) == "table" then
@@ -117,6 +129,10 @@ function ExitHandler:header_filter(config)
 
     elseif find(accept_header, TYPE_GRPC, nil, true) == 1 then
         message = { message = message }
+
+    elseif find(accept_header, TYPE_HTML, nil, true) == 1 and status == 401 then
+        message = fmt(HTML_TEMPLATE_401, message)
+        headers = HEADERS_HTML
 
     elseif find(accept_header, TYPE_HTML, nil, true) == 1 then
         message = fmt(HTML_TEMPLATE, message)
