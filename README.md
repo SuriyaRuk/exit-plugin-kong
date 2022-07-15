@@ -117,24 +117,29 @@ Now you can access konga on [localhost](http://localhost:1337)
 [Kong CE Admin API V2.0](https://documenter.getpostman.com/view/10587735/SzS7QS2c?version=latest#b5c37285-0e71-411a-b44d-f06fea8e6b24)
 
 ### Exit Plugin Kong
-#### Config
-|---------------------------------------------------------------------------------------------------------------------------------|
+
 |name                         |Type    |default value  |Desccriptioin                                                             |
-|---------------------------------------------------------------------------------------------------------------------------------|
+|-----------------------------|--------|---------------|--------------------------------------------------------------------------|
 |`config.hide_brand`          |boolean |true           | Hide Kong Error chang to Error                                           |
-|---------------------------------------------------------------------------------------------------------------------------------|
 |`config.status_502_to_504`   |boolean |true           |chang 502 status code from resty capture to 504 response status of kong   |
-|---------------------------------------------------------------------------------------------------------------------------------|
 
 
-#### intstalation
-* Option 1 luarocks install --server=https://luarocks.org/manifests/suriya exit
+#### installation
+* Option 1
+```
+luarocks install --server=https://luarocks.org/manifests/suriya exit
+
+environments:
+  - KONG_PLUGINS=bundled,exit
+```
 * Option 2 Install manual docker-compose.yml
 ```
 environments:
   - KONG_PLUGINS=bundled,exit
   - KONG_LUA_PACKAGE_PATH=/etc/kong/plugins/exit/?.lua;;
 volumes:
-   - ./plugins/exit:/etc/kong/plugins/exit
+  - ./plugins/exit:/etc/kong/plugins/exit
 ```
+### add status_service
+```config.custom_fields_by_lua.status_service="return kong.service.response.get_status()"```
 
